@@ -25,50 +25,23 @@ def fourier_inversion(x:list[int], tfval:list[int], body:list[int])->int:
     return int(sum(multiplicands)/dividend)
 
 def invasion_correct(original_function_values:list[int], inverted_function_values:list[int]):
-    return all(f == i for f,i in zip(original_function_values, inverted_fourier_transformed_function_values))
+    return all(f == i for f,i in zip(original_function_values, inverted_function_values))
 
 if __name__ == "__main__":
-    """
-    bits = 3
-    body = x_body(bits)
-    fvals = [0, 1, 1, 0, 1, 0, 0, 1]  # Originale Funktionswerte über F2^3
-
-    # Fourier-Transformation berechnen
-    tfvals = [fourier_transform(a, fvals, body) for a in body]
-
-    # Inverse Transformation zur Rekonstruktion
-    itfvals = [fourier_inversion(x, tfvals, body) for x in body]
-
-    print("Fourier-Transformation der Funktion (jeweils für a in F2^3):")
-    print(f"{'a':<10} {'TF[a]':>6}")
-    print("-" * 20)
-    for a, val in zip(body, tfvals):
-        print(f"{bitV2str(a):<10} {val:>6}")
-    
-    print("\nRekonstruierte Funktionswerte aus der Inversion:")
-    print(f"{'x':<10} {'f(x)':>6}")
-    print("-" * 20)
-    for x, val in zip(body, itfvals):
-        print(f"{bitV2str(x):<10} {val:>6}")  
-
-
-    inversion_check(fvals, itfvals)
-    """
 
     bits = 7
     body = x_body(bits)
-    
-    function_values = [
-    1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0,
-    1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1,
-    0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
-    1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1,
-    0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1,
-    1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1,
-    0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
-    1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1
-    ]
 
+    function_values = [
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0,
+        1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1,
+        0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1,
+        0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1,
+        1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1,
+        0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1
+    ]
 
     print("1. Fourier-Transformation wird berechnet...")
     fourier_transformed = [fourier_transform(a, function_values, body) for a in body]
@@ -77,20 +50,19 @@ if __name__ == "__main__":
     inverted_values = [fourier_inversion(x, fourier_transformed, body) for x in body]
 
     print("3. Ergebnisüberprüfung...")
-    is_correct = function_values == inverted_values
+    is_correct = invasion_correct(function_values, inverted_values)
 
-    # Optional: Detaillierte Ausgabe bei Fehler
-    if not is_correct:
-        print("FEHLER: Die Inversion stimmt NICHT mit den Originalwerten überein!")
+    if is_correct:
+        print("✅ Die Inversion stimmt mit den Originalwerten überein!")
+    else:
+        print("❌ FEHLER: Die Inversion stimmt NICHT mit den Originalwerten überein!")
         print(f"{'x':<10} {'Original':>10} {'Invers':>10} {'OK?':>6}")
         print("-" * 40)
         for x, orig, inv in zip(body, function_values, inverted_values):
             status = "OK" if orig == inv else "FAIL"
             print(f"{bitV2str(x):<10} {orig:>10} {inv:>10} {status:>6}")
-    else:
-        print("Die Inversion stimmt mit den Originalwerten überein!")
 
-    # Optional: Zeige Fourier-Koeffizienten (z. B. nur die Nicht-Nullen)
+    # Optional: Nur nicht-null Fourier-Koeffizienten anzeigen
     print("\nNicht-null Fourier-Koeffizienten:")
     print(f"{'a':<10} {'TF[a]':>10}")
     print("-" * 25)
