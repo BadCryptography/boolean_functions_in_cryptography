@@ -1,3 +1,11 @@
+"""
+NOTE: THIS IS SIMPLY A FOOLISH IMPLEMENTATION OF THE ALGORITHM THAT HAS A
+RUNTIME OF O(N*2^(2N))
+THE NEXT FILE WILL CONTAIN A MORE EFFICIANT ALGORITHM WITH A SIGNIFICANTLY
+REDUCED RUNTIME
+"""
+
+
 from util import x_body, character, bitV2str
 
 #The idea of the fourier-transformation is to see how a function
