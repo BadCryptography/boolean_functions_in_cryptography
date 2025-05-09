@@ -61,9 +61,9 @@ if __name__ == "__main__":
     is_correct = invasion_correct(function_values, inverted_values)
 
     if is_correct:
-        print("✅ Die Inversion stimmt mit den Originalwerten überein!")
+        print("Die Inversion stimmt mit den Originalwerten überein!")
     else:
-        print("❌ FEHLER: Die Inversion stimmt NICHT mit den Originalwerten überein!")
+        print("FEHLER: Die Inversion stimmt NICHT mit den Originalwerten überein!")
         print(f"{'x':<10} {'Original':>10} {'Invers':>10} {'OK?':>6}")
         print("-" * 40)
         for x, orig, inv in zip(body, function_values, inverted_values):
